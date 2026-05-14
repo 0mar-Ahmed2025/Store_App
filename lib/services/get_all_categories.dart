@@ -7,8 +7,14 @@ class AllCategoriesService {
       Uri.parse("https://fakestoreapi.com/products/categories"),
     );
 
-    List<dynamic> data = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      List<dynamic> data = jsonDecode(response.body);
 
-    return data;
+      return data;
+    } else {
+      throw Exception(
+        "there is a problem with status code ${response.statusCode}",
+      );
+    }
   }
 }
