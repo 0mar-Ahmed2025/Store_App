@@ -24,7 +24,31 @@ class ApiHelper {
       headers: headers,
       body: body,
     );
-    Map<String, dynamic> responseBody = jsonDecode(response.body);
-    return responseBody;
+    if (response.statusCode == 200) {
+      Map<String, dynamic> responseBody = jsonDecode(response.body);
+      return responseBody;
+    } else {
+      throw Exception(
+        "there is a problem with status code ${response.statusCode} with body ${response.body}",
+      );
+    }
+  }
+
+  Future<dynamic> put({required String url, @required dynamic body}) async {
+    Map<String, String> headers = {};
+    headers.addAll({'Content-Type': 'application/x-www-form-urlencoded'});
+    http.Response response = await http.put(
+      Uri.parse(url),
+      headers: headers,
+      body: body,
+    );
+    if (response.statusCode == 200) {
+      Map<String, dynamic> responseBody = jsonDecode(response.body);
+      return responseBody;
+    } else {
+      throw Exception(
+        "there is a problem with status code ${response.statusCode} with body ${response.body}",
+      );
+    }
   }
 }
